@@ -28,7 +28,7 @@
       </el-row>
       <el-row class="rowStyle">
         <el-col>
-          <el-button type="primary" style="width: 60%">登录</el-button>
+          <el-button type="primary" style="width: 60%" @click="handleLogin">登录</el-button>
         </el-col>
       </el-row>
     </div>
@@ -37,8 +37,23 @@
 
 <script setup lang="ts">
 import {ref} from "vue";
-const username=ref('abc');
+import {authLogin} from "@/apis/login/login";
+import {LoginInfo} from "@/views/login/Login";
+import {ElMessage} from "element-plus";
+const username=ref('');
 const password=ref('');
+
+function handleLogin(){
+  let loginInfo:LoginInfo = {
+    username:username.value,
+    password:password.value
+  }
+  authLogin(loginInfo,it=>{
+    if (it.success){
+      ElMessage.success('登录成功');
+    }
+  });
+}
 </script>
 
 <style scoped>

@@ -42,12 +42,12 @@ export type StringResult = Result<string>;
 export const emptySuccess: EmptyResult = { success: true };
 export const emptyFailure: EmptyResult = { success: false };
 
-export const baseServerURL = 'http://172.18.1.133:7300';
+// export const baseServerURL = 'http://localhost:1212';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const clientConfig: AxiosClientConfig = {
-  baseURL: baseServerURL,
+  // baseURL: baseServerURL,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   withCredentials: tokenSend === TokenType.Header,
