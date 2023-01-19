@@ -6,3 +6,9 @@ export function authLogin(data: LoginInfo, doSuccess: (it: Result<unknown>) => v
     const json=data;
     client.handJson(url,doSuccess,json);
 }
+
+export function register(data: LoginInfo, doSuccess: (it: Result<unknown>) => void): void {
+    const url='/user/register.json';
+    const json=data;
+    client.handJson(url,doSuccess,json);
+}
