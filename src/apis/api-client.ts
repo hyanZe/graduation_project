@@ -15,6 +15,7 @@ import globalEvent from '@/libs/global-event';
 import { ciGet } from '@/libs/objects';
 import pinia, { Store } from '@/store';
 import {ElMessage, ElMessageBox} from "element-plus";
+import router from "@/router";
 
 const store = Store(pinia);
 
@@ -82,9 +83,14 @@ const clientConfig: AxiosClientConfig = {
     return config;
   },
   interceptResponse(response) {
+    console.log(response);
     if (response.config?.params?.[captchaCheck] && response.status == 200) {
       /* const store = refStore();
       store.commit('authn/captcha', {});*/
+    }
+    if (response.status === 401){
+      ElMessage.error('请重新登陆');
+      router.push('/login');
     }
     const result = response.data;
     console.log('result', result);

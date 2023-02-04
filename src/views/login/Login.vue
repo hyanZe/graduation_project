@@ -39,30 +39,26 @@
         </el-row>
       </el-card>
     </div>
-    <div class="loginForm" v-if="mode">
+    <div class="registerForm" v-if="mode">
       <el-card>
         <el-row class="rowStyle">
-          <el-col :span="6">
-            <span>用户名：</span>
-          </el-col>
-          <el-col :span="17">
+          <el-col>
             <el-input
                 v-model="username"
                 placeholder="请输入用户名"
                 input-style="text-align:center"
+                :prefix-icon="User"
             />
           </el-col>
         </el-row>
         <el-row class="rowStyle">
-          <el-col :span="6">
-            <span>密码：</span>
-          </el-col>
-          <el-col :span="17">
+          <el-col>
             <el-input
                 v-model="password"
                 type="password"
                 show-password placeholder="请输入密码"
                 input-style="text-align:center"
+                :prefix-icon="Lock"
             />
           </el-col>
         </el-row>
@@ -88,6 +84,8 @@ import {authLogin, register} from "@/apis/login/login";
 // @ts-ignore
 import {LoginInfo} from "@/views/login/Login";
 import {ElMessage} from "element-plus";
+import {Lock, User} from "@element-plus/icons-vue";
+import router from "@/router";
 const username=ref('');
 const password=ref('');
 const mode=ref(false);
@@ -100,6 +98,7 @@ function handleLogin(){
   authLogin(loginInfo,it=>{
     if (it.success){
       ElMessage.success('登录成功');
+      router.push('/main/dashboard');
     }
   });
 }
@@ -133,6 +132,11 @@ function switchMode(){
 .loginForm{
   height: 30%;
   width: 30vw;
+  margin-top: 10%;
+}
+.registerForm{
+  height: 30%;
+  width: 25vw;
   margin-top: 10%;
 }
 .rowStyle{
