@@ -48,7 +48,7 @@ export const emptyFailure: EmptyResult = { success: false };
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const clientConfig: AxiosClientConfig = {
-  // baseURL: baseServerURL,
+  baseURL: '/api',
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   withCredentials: tokenSend === TokenType.Header,
