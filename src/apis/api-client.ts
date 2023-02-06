@@ -13,11 +13,11 @@ import {
 } from '@/config/global';
 import globalEvent from '@/libs/global-event';
 import { ciGet } from '@/libs/objects';
-import pinia, { Store } from '@/store';
+import pinia, { SystemStore } from '@/store';
 import {ElMessage, ElMessageBox} from "element-plus";
 import router from "@/router";
 
-const store = Store(pinia);
+const store = SystemStore(pinia);
 
 export interface Result<T> {
   success: boolean;

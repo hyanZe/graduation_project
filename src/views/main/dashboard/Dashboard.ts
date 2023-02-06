@@ -23,3 +23,9 @@ export interface SensorCount {
     baseTempUsing: number;
     baseTempTotal: number;
 }
+
+export interface DeviceInfo{
+    id:number;
+    ip:string;
+    deviceName:string;
+}

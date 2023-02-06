@@ -10,3 +10,8 @@ export function getSensorCount(doSuccess: (it: Result<SensorCount>) => void): vo
     const url='/auth/dashboard/sensor-count.json';
     client.handJson(url,doSuccess);
 }
+
+export function getDeviceList(doSuccess: (it: Result<any>) => void): void {
+    const url='/auth/device/device-list.json';
+    client.handJson(url,doSuccess);
+}

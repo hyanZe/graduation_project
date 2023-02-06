@@ -165,8 +165,15 @@
                   <span>请选择树莓派：</span>
                 </el-col>
                 <el-col :span="8">
-                  <el-select>
-
+                  <el-select
+                      v-model="currentDevice"
+                      placeholder="请选择设备"
+                  >
+                    <el-option
+                      v-for="item in deviceList"
+                      :key="item.id"
+                      :label="item.deviceName"
+                      :value="item.id" />
                   </el-select>
                 </el-col>
               </el-row>
@@ -233,17 +240,16 @@
 import * as echarts from 'echarts';
 import {onMounted, ref} from "vue";
 import {emptyArray, emptyObject} from "@/libs/empty";
-import {SensorCount, SensorDataCount} from "@/views/main/dashboard/Dashboard";
-import {getSensorCount, getSensorDataCount} from "@/apis/main/dashboard";
+import {DeviceInfo, SensorCount, SensorDataCount} from "@/views/main/dashboard/Dashboard";
+import {getDeviceList, getSensorCount, getSensorDataCount} from "@/apis/main/dashboard";
+
 
 onMounted(() => {
   initPage();
 });
 
-const sensorUsingArray = ref(emptyArray<number>());
-const sensorTotalArray = ref(emptyArray<number>());
-sensorUsingArray.value.push(1);
-sensorTotalArray.value.push(5);
+const currentDevice=ref();
+const deviceList=ref(emptyArray<DeviceInfo>());
 const sensorDataCount = ref(emptyObject<SensorDataCount>());
 const sensorCount = ref(emptyObject<SensorCount>({
   phUsing:0,
@@ -281,6 +287,7 @@ function initPage() {
     sensorCount.value = emptyObject(it.data);
   });
   initEcharts();
+  initDeviceList();
 }
 
 function initEcharts() {
@@ -300,9 +307,17 @@ function initEcharts() {
       {
         name: '平均浓度',
         type: 'bar',
-        data: [5, 20, 36, 10, 10, 20]
+        data: [0, 0, 0, 0]
       }
     ]
+  });
+}
+
+function initDeviceList(){
+  getDeviceList(it=>{
+    if (it.success){
+      deviceList.value = emptyArray(it.data);
+    }
   });
 }
 </script>
