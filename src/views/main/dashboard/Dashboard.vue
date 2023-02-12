@@ -168,6 +168,7 @@
                   <el-select
                       v-model="currentDevice"
                       placeholder="请选择设备"
+                      @change="getChartData"
                   >
                     <el-option
                       v-for="item in deviceList"
@@ -240,8 +241,8 @@
 import * as echarts from 'echarts';
 import {onMounted, ref} from "vue";
 import {emptyArray, emptyObject} from "@/libs/empty";
-import {DeviceInfo, SensorCount, SensorDataCount} from "@/views/main/dashboard/Dashboard";
-import {getDeviceList, getSensorCount, getSensorDataCount} from "@/apis/main/dashboard";
+import {AverageDeviceData, DeviceInfo, SensorCount, SensorDataCount} from "@/views/main/dashboard/Dashboard";
+import {getDeviceAverageData, getDeviceList, getSensorCount, getSensorDataCount} from "@/apis/main/dashboard";
 
 
 onMounted(() => {
@@ -251,6 +252,12 @@ onMounted(() => {
 const currentDevice=ref();
 const deviceList=ref(emptyArray<DeviceInfo>());
 const sensorDataCount = ref(emptyObject<SensorDataCount>());
+const averageData=ref(emptyObject<AverageDeviceData>({
+  ph:0,
+  p:0,
+  n:0,
+  k:0
+}));
 const sensorCount = ref(emptyObject<SensorCount>({
   phUsing:0,
   phTotal:0,
@@ -307,16 +314,26 @@ function initEcharts() {
       {
         name: '平均浓度',
         type: 'bar',
-        data: [0, 0, 0, 0]
+        data: [averageData.value.ph, averageData.value.p, averageData.value.n, averageData.value.k]
       }
     ]
   });
 }
 
 function initDeviceList(){
-  getDeviceList(it=>{
+  getDeviceList(it => {
     if (it.success){
       deviceList.value = emptyArray(it.data);
+    }
+  });
+}
+
+function getChartData(){
+  //获取传感器平均数据
+  getDeviceAverageData(currentDevice.value,it => {
+    if (it.success){
+      averageData.value = emptyObject(it.data);
+      initEcharts();
     }
   });
 }

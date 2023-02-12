@@ -29,3 +29,10 @@ export interface DeviceInfo{
     ip:string;
     deviceName:string;
 }
+
+export interface AverageDeviceData{
+    ph:number,
+    p:number,
+    n:number,
+    k:number
+}

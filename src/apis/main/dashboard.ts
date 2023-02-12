@@ -15,3 +15,8 @@ export function getDeviceList(doSuccess: (it: Result<any>) => void): void {
     const url='/auth/device/device-list.json';
     client.handJson(url,doSuccess);
 }
+
+export function getDeviceAverageData(deviceId:number,doSuccess: (it: Result<any>) => void) : void{
+    const url='/auth/dashboard/average-data.json';
+    client.handForm(url,doSuccess,{deviceId:deviceId});
+}
