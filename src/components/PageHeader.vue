@@ -11,6 +11,7 @@
             :router="true"
         >
           <el-menu-item index="/main/dashboard">仪表盘</el-menu-item>
+          <el-menu-item index="/main/deviceDetail">设备详情</el-menu-item>
         </el-menu>
       </el-col>
     </el-row>

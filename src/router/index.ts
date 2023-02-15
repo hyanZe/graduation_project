@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Login from "@/views/login/Login.vue";
 import MainPage from "@/views/main/MainPage.vue";
 import dashboard from "@/views/main/dashboard/Dashboard.vue";
+import DeviceDetail from "@/views/main/deviceDetail/DeviceDetail.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -21,6 +22,11 @@ const routes: Array<RouteRecordRaw> = [
         path: 'dashboard',
         component: dashboard,
         name: 'dashboard',
+      },
+      {
+        path: 'deviceDetail',
+        component: DeviceDetail,
+        name: 'deviceDetail',
       },
     ],
   }
