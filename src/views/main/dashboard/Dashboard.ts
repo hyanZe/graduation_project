@@ -36,3 +36,9 @@ export interface AverageDeviceData{
     n:number,
     k:number
 }
+
+export interface DeviceCondData{
+    deviceName:string,
+    sensorCountUsing:number,
+    sensorCountTotal:number,
+}

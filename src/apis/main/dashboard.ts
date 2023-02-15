@@ -20,3 +20,8 @@ export function getDeviceAverageData(deviceId:number,doSuccess: (it: Result<any>
     const url='/auth/dashboard/average-data.json';
     client.handForm(url,doSuccess,{deviceId:deviceId});
 }
+
+export function getDeviceCondData(doSuccess: (it: Result<any>) => void) : void{
+    const url='/auth/dashboard/device-condition.json';
+    client.handForm(url,doSuccess);
+}

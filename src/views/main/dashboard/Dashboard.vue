@@ -195,36 +195,14 @@
                 </el-col>
               </el-row>
               <el-row style="margin-top: 10%">
-                <el-col :span="8">
-                  <el-progress type="dashboard" :percentage="50">
+                <el-col :span="8" v-for="item in deviceCondList" :key="item.deviceName">
+                  <el-progress type="dashboard" :percentage="item.sensorCountUsing / item.sensorCountTotal">
                     <template #default="">
-                      <span>1号设备</span>
+                      <span>{{item.deviceName}}</span>
                       <br/>
                       <span>运行传感器数量</span>
                       <br/>
-                      <span>8/25</span>
-                    </template>
-                  </el-progress>
-                </el-col>
-                <el-col :span="8">
-                  <el-progress type="dashboard" :percentage="50">
-                    <template #default="">
-                      <span>2号设备</span>
-                      <br/>
-                      <span>运行传感器数量</span>
-                      <br/>
-                      <span>8/25</span>
-                    </template>
-                  </el-progress>
-                </el-col>
-                <el-col :span="8">
-                  <el-progress type="dashboard" :percentage="50">
-                    <template #default="">
-                      <span>3号设备</span>
-                      <br/>
-                      <span>运行传感器数量</span>
-                      <br/>
-                      <span>8/25</span>
+                      <span>{{item.sensorCountUsing}}/{{item.sensorCountTotal}}</span>
                     </template>
                   </el-progress>
                 </el-col>
@@ -241,8 +219,20 @@
 import * as echarts from 'echarts';
 import {onMounted, ref} from "vue";
 import {emptyArray, emptyObject} from "@/libs/empty";
-import {AverageDeviceData, DeviceInfo, SensorCount, SensorDataCount} from "@/views/main/dashboard/Dashboard";
-import {getDeviceAverageData, getDeviceList, getSensorCount, getSensorDataCount} from "@/apis/main/dashboard";
+import {
+  AverageDeviceData,
+  DeviceCondData,
+  DeviceInfo,
+  SensorCount,
+  SensorDataCount
+} from "@/views/main/dashboard/Dashboard";
+import {
+  getDeviceAverageData,
+  getDeviceCondData,
+  getDeviceList,
+  getSensorCount,
+  getSensorDataCount
+} from "@/apis/main/dashboard";
 
 
 onMounted(() => {
@@ -252,6 +242,7 @@ onMounted(() => {
 const currentDevice=ref();
 const deviceList=ref(emptyArray<DeviceInfo>());
 const sensorDataCount = ref(emptyObject<SensorDataCount>());
+const deviceCondList = ref(emptyArray<DeviceCondData>());
 const averageData=ref(emptyObject<AverageDeviceData>({
   ph:0,
   p:0,
@@ -295,6 +286,7 @@ function initPage() {
   });
   initEcharts();
   initDeviceList();
+  initDeviceCondData();
 }
 
 function initEcharts() {
@@ -334,6 +326,14 @@ function getChartData(){
     if (it.success){
       averageData.value = emptyObject(it.data);
       initEcharts();
+    }
+  });
+}
+
+function initDeviceCondData(){
+  getDeviceCondData(it=>{
+    if (it.success){
+      deviceCondList.value = emptyArray(it.data);
     }
   });
 }
