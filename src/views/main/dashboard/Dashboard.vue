@@ -186,7 +186,7 @@
             </el-card>
           </el-col>
         </el-row>
-        <el-row style="margin-top: 5%">
+        <el-row style="margin-top: 8vh">
           <el-col>
             <el-card shadow="hover">
               <el-row>
@@ -341,8 +341,8 @@ function initDeviceCondData(){
 
 <style scoped>
 .dashboardContent {
-  width: 80%;
-  margin: 3vh auto;
+  width: 80vw;
+  margin: 5vh auto;
 }
 
 .dataStyle {

@@ -14,3 +14,14 @@ export function getSensorDataList(data:any,doSuccess: (it: Result<any>) => void)
     const url='/auth/device/sensor-data-list.json';
     client.handForm(url,doSuccess,{deviceId:data.deviceId,sensorId:data.sensorId});
 }
+
+export function getDataLogs(data:number,doSuccess: (it: Result<any>) => void) : void{
+    const url='/auth/device/data-logs.json';
+    client.handForm(url,doSuccess,{deviceId:data});
+}
+
+export function updateDataState(data:any,doSuccess: (it: Result<any>) => void) : void{
+    const url='/auth/device/update-err.json';
+    console.log('data', data);
+    client.handForm(url,doSuccess,{dataId:data.dataId,state:data.state});
+}

@@ -1,9 +1,26 @@
 <template>
-  <div id="app">
-    <div class="contents">
-      <router-view />
+    <div id="app">
+      <div class="pageHeader">
+        <el-row style="align-items: center">
+          <el-col :span="24">
+            <el-menu
+                default-active="/main/dashboard"
+                mode="horizontal"
+                :router="true"
+                style="align-items: center"
+            >
+              <img src="@/assets/logo1.png" height="70"/>
+              <el-menu-item index="/main/dashboard">仪表盘</el-menu-item>
+              <el-menu-item index="/main/deviceDetail">设备详情</el-menu-item>
+            </el-menu>
+          </el-col>
+        </el-row>
+      <div class="contents">
+        <router-view />
+      </div>
     </div>
   </div>
+
 </template>
 
 <script setup lang="ts">
@@ -58,17 +75,20 @@ const eventSwitches = [
   color: #2c3e50;
   margin: -8px -8px auto;
 }
+.pageHeader{
+  height: 10vh;
+}
 
 .contents {
   display: flex;
   justify-content: center;
   background-color: #f7f8fa;
-  height: 100vh;
+  height: 90vh;
 }
 html,
 body,
 #app,
-.contents {
+{
   height: 100%;
   margin: 0;
   padding: 0;
