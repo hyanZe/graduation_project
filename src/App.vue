@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-      <div class="pageHeader">
+      <div class="pageHeader" v-if="router.currentRoute.value.fullPath !== '/login'">
         <el-row style="align-items: center">
           <el-col :span="24">
             <el-menu
@@ -15,10 +15,11 @@
             </el-menu>
           </el-col>
         </el-row>
+      </div>
+      <div v-else class="pageHeader" style="background-color: #f7f8fa"/>
       <div class="contents">
         <router-view />
       </div>
-    </div>
   </div>
 
 </template>
@@ -28,10 +29,11 @@ import {eventSwitch} from "@/libs/global-event";
 import {ElMessage} from "element-plus";
 import logger from "@/libs/logger";
 import {onMounted, onUnmounted} from "vue";
+import router from "@/router";
 
 onMounted(() => {
   eventSwitches.forEach(it => it.on());
-
+  console.log(router.currentRoute.value.fullPath)
 });
 
 onUnmounted(() => {

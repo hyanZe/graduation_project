@@ -11,6 +11,7 @@
                 v-model="username"
                 placeholder="请输入用户名"
                 input-style="text-align:center"
+                :prefix-icon="User"
             />
           </el-col>
         </el-row>
@@ -24,6 +25,7 @@
                 type="password"
                 show-password placeholder="请输入密码"
                 input-style="text-align:center"
+                :prefix-icon="Lock"
             />
           </el-col>
         </el-row>

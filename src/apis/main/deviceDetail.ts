@@ -25,3 +25,15 @@ export function updateDataState(data:any,doSuccess: (it: Result<any>) => void) :
     console.log('data', data);
     client.handForm(url,doSuccess,{dataId:data.dataId,state:data.state});
 }
+
+export function updateThreshold(data:any,doSuccess: (it: Result<any>) => void) : void{
+    const url='/auth/device/update-config.json';
+    console.log('data', data);
+    client.handForm(url,doSuccess,{deviceId:data.deviceId,key:data.key,val:data.val});
+}
+
+export function loadThreshold(data:any,doSuccess: (it: Result<any>) => void) : void{
+    const url='/auth/device/threshold.json';
+    console.log('data', data);
+    client.handForm(url,doSuccess,{deviceId:data});
+}

@@ -4,7 +4,7 @@
       <el-col :span="12">
         <el-row>
           <el-col>
-            <el-card style="width: 40vw" shadow="hover">
+            <el-card style="width: 40vw">
               <el-row>
                 <el-col :span="6">
                   <el-row>
@@ -60,7 +60,7 @@
         </el-row>
         <el-row style="margin-top: 5%">
           <el-col>
-            <el-card shadow="hover">
+            <el-card>
               <el-row>
                 <el-col>
                   <span>传感器个数数据</span>
@@ -159,7 +159,7 @@
       <el-col :span="9" :offset="1">
         <el-row>
           <el-col>
-            <el-card shadow="hover">
+            <el-card>
               <el-row style="align-items: center">
                 <el-col :span="8" :offset="4">
                   <span>请选择树莓派：</span>
@@ -188,7 +188,7 @@
         </el-row>
         <el-row style="margin-top: 8vh">
           <el-col>
-            <el-card shadow="hover">
+            <el-card>
               <el-row>
                 <el-col>
                   <span style="font-size: 1.2rem">设备运行状态</span>
