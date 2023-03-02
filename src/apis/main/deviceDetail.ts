@@ -37,3 +37,9 @@ export function loadThreshold(data:any,doSuccess: (it: Result<any>) => void) : v
     console.log('data', data);
     client.handForm(url,doSuccess,{deviceId:data});
 }
+
+export function deviceDetailInfo(data:any,doSuccess: (it: Result<any>) => void) : void{
+    const url='/auth/device/detail-info.json';
+    console.log('data', data);
+    client.handForm(url,doSuccess,{deviceId:data});
+}

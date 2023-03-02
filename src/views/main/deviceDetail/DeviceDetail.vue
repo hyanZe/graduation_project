@@ -91,7 +91,9 @@
                       <span>{{ scope.row.createDt.substring(scope.row.createDt.indexOf('-') + 1, scope.row.createDt.lastIndexOf('.')) }}</span>
                     </el-table-column>
                     <el-table-column label="数据类型" prop="dataType"/>
-                    <el-table-column label="数据值" prop="data"/>
+                    <el-table-column label="数据值" prop="data" v-slot="scope">
+                      <el-tag :type="dataStatus(scope.row.dataType,scope.row.data)?'success':'danger'">{{scope.row.data}}</el-tag>
+                    </el-table-column>
                     <el-table-column label="是否异常" prop="error">
                       <template v-slot="scope">
                         <el-checkbox v-model="scope.row.isError" @change="handleChangeErrorState(scope.row)"/>
@@ -198,6 +200,89 @@
             </el-card>
           </el-col>
         </el-row>
+        <el-row>
+          <el-col>
+            <el-card>
+              <template #header>
+                <el-row style="align-items: center;text-align: left">
+                  <el-col :span="4">
+                    <el-icon class="iconStyle"><Platform/></el-icon>
+                    <span style="font-weight: 700">设备信息</span>
+                  </el-col>
+                </el-row>
+              </template>
+              <el-row style="align-items: center;text-align: left">
+                <el-col :span="10" :offset="1">
+                  <el-icon class="iconStyle"><Monitor/></el-icon>
+                  <span>设备名称：aaaa</span>
+                </el-col>
+                <el-col :span="10" :offset="1">
+                  <el-icon class="iconStyle"><Calendar/></el-icon>
+                  <span>创建时间：2023-01-02</span>
+                </el-col>
+              </el-row>
+              <el-row style="align-items: center;text-align: left">
+                <el-col :span="10" :offset="1">
+                  <el-icon class="iconStyle"><Monitor/></el-icon>
+                  <span>IP地址：127.0.0.1:3366</span>
+                </el-col>
+                <el-col :span="10" :offset="1">
+                  <el-icon class="iconStyle"><Calendar/></el-icon>
+                  <span>是否运行：是</span>
+                </el-col>
+              </el-row>
+              <el-row style="align-items: center;text-align: left">
+                <el-col :span="10" :offset="1">
+                  <el-icon class="iconStyle"><Monitor/></el-icon>
+                  <span>传感器总数：50</span>
+                </el-col>
+                <el-col :span="10" :offset="1">
+
+                </el-col>
+              </el-row>
+              <el-row style="align-items: center;text-align: left">
+                <el-col :span="10" :offset="1">
+                  <el-icon class="iconStyle"><Monitor/></el-icon>
+                  <span>P传感器：50</span>
+                </el-col>
+                <el-col :span="10" :offset="1">
+                  <el-icon class="iconStyle"><Calendar/></el-icon>
+                  <span>PH传感器：1</span>
+                </el-col>
+              </el-row>
+              <el-row style="align-items: center;text-align: left">
+                <el-col :span="10" :offset="1">
+                  <el-icon class="iconStyle"><Monitor/></el-icon>
+                  <span>空气温度传感器：50</span>
+                </el-col>
+                <el-col :span="10" :offset="1">
+                  <el-icon class="iconStyle"><Calendar/></el-icon>
+                  <span>基质浓度传感器：1</span>
+                </el-col>
+              </el-row>
+              <el-row style="align-items: center;text-align: left">
+                <el-col :span="10" :offset="1">
+                  <el-icon class="iconStyle"><Monitor/></el-icon>
+                  <span>N传感器：50</span>
+                </el-col>
+                <el-col :span="10" :offset="1">
+                  <el-icon class="iconStyle"><Calendar/></el-icon>
+                  <span>K传感器：1</span>
+                </el-col>
+              </el-row>
+              <el-row style="align-items: center;text-align: left">
+                <el-col :span="10" :offset="1">
+                  <el-icon class="iconStyle"><Monitor/></el-icon>
+                  <span>空气湿度传感器：50</span>
+                </el-col>
+                <el-col :span="10" :offset="1">
+                  <el-icon class="iconStyle"><Calendar/></el-icon>
+                  <span>空气温度传感器：1</span>
+                </el-col>
+              </el-row>
+            </el-card>
+          </el-col>
+        </el-row>
       </el-col>
     </el-row>
   </div>
@@ -210,6 +295,7 @@ import {DeviceInfo} from "@/views/main/dashboard/Dashboard";
 import {getDeviceList} from "@/apis/main/dashboard";
 import * as echarts from "echarts";
 import {
+  deviceDetailInfo,
   getDataLogs,
   getDeviceDataTypeList,
   getDeviceSensorList,
@@ -217,7 +303,7 @@ import {
   updateDataState, updateThreshold
 } from "@/apis/main/deviceDetail";
 import {ElMessage} from "element-plus";
-import {InfoFilled, Warning} from "@element-plus/icons-vue";
+import {Warning,Platform,Monitor,Calendar} from "@element-plus/icons-vue";
 
 const currentDevice = ref();
 const currentDataType = ref('');
@@ -240,7 +326,15 @@ const threshold = ref({
   airWetThreshold: 0,
   baseTempThreshold: 0
 });
+const deviceDetail = ref({
+  deviceName:'',
+  createDt:'',
+  ip:'',
+  totalSensorCount:0,
+  pSensorCount:0,
+  phSensorCount:0,
 
+});
 onMounted(() => {
   initPage();
 });
@@ -387,8 +481,28 @@ function handleLoadThreshold(){
     }
   });
 }
+
+function dataStatus(type:string,val:number){
+  return type === 'ph' && val < threshold.value.phThreshold
+      || type === 'p' && val < threshold.value.pThreshold
+      || type === 'airTemp' && val < threshold.value.airTempThreshold
+      || type === 'base' && val < threshold.value.baseThreshold
+      || type === 'n' && val < threshold.value.nThreshold
+      || type === 'k' && val < threshold.value.kThreshold
+      || type === 'airWet' && val < threshold.value.airWetThreshold
+      || type === 'baseTemp' && val < threshold.value.baseTempThreshold
+}
+function handleLoadDeviceDetail(){
+  deviceDetailInfo(currentDevice.value,it => {
+    if (it.success){
+
+    }
+  })
+}
 </script>
 
 <style scoped>
-
+.iconStyle{
+  margin-right: 5px;
+}
 </style>
